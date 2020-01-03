@@ -93,6 +93,10 @@ func main()  {
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/edit/", editHandler)
 	http.HandleFunc("/save/", saveHandler)
+
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	log.Println("Server started at port :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
